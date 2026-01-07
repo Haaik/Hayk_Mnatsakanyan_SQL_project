@@ -1,0 +1,103 @@
+# ETL Pipeline and SQL Analytics – Bookstore Project
+
+## Project Overview
+This project implements a complete ETL (Extract, Transform, Load) pipeline for a bookstore
+e-commerce domain. The goal is to demonstrate practical database engineering skills, including
+data collection, cleaning, database design, data insertion, and analytical SQL querying using
+PostgreSQL.
+
+---
+
+## Data Collection
+- Data was collected via web scraping and stored in JSON format.
+- Categories and products were extracted and saved as raw JSON files.
+- Raw data is preserved in the `data/raw` directory for reproducibility.
+
+---
+
+## Data Processing
+- Python scripts were used to clean the scraped data and generate synthetic data.
+- Faker was used to generate customers, orders, and order items.
+- Data was saved as processed CSV files in `data/processed`.
+
+Generated entities:
+- Categories
+- Products
+- Customers
+- Orders
+- Order Items
+
+---
+
+## Database Design
+- PostgreSQL relational database with a dedicated schema (`bookstore`).
+- Normalized schema with primary keys and foreign key relationships.
+- Tables:
+  - categories
+  - products
+  - customers
+  - orders
+  - order_items
+- Referential integrity enforced using foreign keys.
+
+---
+
+## Table Partitioning
+- The `orders` table is partitioned by range on `order_date`.
+- Year-based partitions were created (2022–2025).
+- A DEFAULT partition was added to safely handle future data.
+- A composite primary key `(order_id, order_date)` was used to comply with PostgreSQL partitioning rules.
+
+---
+
+## Data Insertion
+- Batch data insertion was implemented using Python and `psycopg2`.
+- CSV files were loaded and inserted using parameterized queries.
+- NumPy data types were converted to native Python types before insertion to ensure stability.
+- Transaction management and error handling were applied.
+
+---
+
+## SQL Analytics
+- Advanced SQL queries were written and executed directly in PostgreSQL.
+- Queries demonstrate:
+  - JOINs
+  - Aggregations
+  - GROUP BY and HAVING
+  - Window functions (RANK, LAG)
+  - Common Table Expressions (CTEs)
+  - Date and time analysis
+- All analytical queries are stored in `sql/queries.sql`.
+
+---
+
+## Tools and Technologies
+- Python
+- PostgreSQL
+- pgAdmin
+- psycopg2
+- pandas
+- Faker
+
+---
+
+## Project Structure
+
+
+
+project_root/
+│
+├── data/
+│ ├── raw/
+│ └── processed/
+├── scripts/
+│ ├── scraper.py
+│ ├── clean_and_generate.py
+│ └── insert_to_db.py
+├── sql/
+│ ├── schema.sql
+│ └── queries.sql
+├── docs/
+│ └── er_diagram.png
+└── documentation
+
