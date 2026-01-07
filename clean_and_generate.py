@@ -9,19 +9,19 @@ from datetime import datetime
 fake = Faker()
 os.makedirs('data/processed', exist_ok=True)
 
-print("Սկսում եմ cleaning և fake data generation...")
+print("starting cleaning and fake data generation...")
 
 # 1. Categories → CSV
 cat_df = pd.read_json('data/raw/categories.json')
 cat_df.to_csv('data/processed/categories.csv', index=False)
-print("categories.csv պահպանված")
+print("categories.csv saved")
 
 # 2. Products → CSV
 prod_df = pd.read_json('data/raw/products.json')
 prod_df['price'] = prod_df['price'].astype(float)
 prod_df = prod_df.drop_duplicates(subset=['name'])
 prod_df.to_csv('data/processed/products.csv', index=False)
-print(f"products.csv պահպանված ({len(prod_df)} գիրք)")
+print(f"products.csv saved ({len(prod_df)} boook)")
 
 # 3. Fake Customers
 customers = []
@@ -38,7 +38,7 @@ for i in range(1, 1001):
     })
 
 pd.DataFrame(customers).to_csv('data/processed/customers.csv', index=False)
-print("customers.csv պահպանված (1000 հաճախորդ)")
+print("customers.csv saved (1000 customer)")
 
 # 4. Fake Orders
 orders = []
@@ -77,6 +77,6 @@ for order_id in range(1, 2501):
         item_id += 1
 
 pd.DataFrame(order_items).to_csv('data/processed/order_items.csv', index=False)
-print(f"order_items.csv saved ({len(order_items)} տող)")
+print(f"order_items.csv saved ({len(order_items)} row)")
 
 print("Done!")
